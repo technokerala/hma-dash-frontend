@@ -102,6 +102,7 @@ function Statedash() {
           <p style={styles.imageCaption}>Material Collection Facility (MCF)</p>
           <p style={styles.imageCaption}>
             <strong>My Waste My Responsibility</strong>
+            <strong>My Waste My Responsibility</strong>
           </p>
           <p style={styles.imageCaption}>
             Waste management is an important part of our daily living,
