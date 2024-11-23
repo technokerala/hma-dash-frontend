@@ -1,15 +1,11 @@
-import Statedash from "./Pages/Statedash";
-
-
-
+import Home from "./Pages/Home";
 function App() {
   return (
     <div className="App">
-        <Statedash />
-
+          <Home />
+        
     </div>
   );
 }
 
 export default App;
- 
