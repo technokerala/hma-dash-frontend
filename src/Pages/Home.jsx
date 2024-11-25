@@ -1,5 +1,5 @@
 import homeImage from "../img/Home-pic.jpg";
-import {styles} from "../Styles" ;
+import { styles } from "../Styles";
 import Statedash from "./Statedash";
 import Footer from "./Footer";
 
@@ -37,7 +37,6 @@ function Home() {
           </div>
           <Statedash />
           <Footer />
-          
         </div>
       </div>
     </div>
