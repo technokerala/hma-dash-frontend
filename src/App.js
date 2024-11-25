@@ -1,9 +1,11 @@
 import Home from "./Pages/Home";
+import Savedata from "./Pages/Savedata";
 function App() {
   return (
     <div className="App">
-          <Home />
-        
+      
+      <Savedata />
+      {/*<Home />*/}
     </div>
   );
 }
