@@ -1,46 +1,50 @@
-import { React, useState } from "react";
+import React, { useState } from "react";
 import "../Savedata.css";
+import axios from "axios";
 
 function Savedata() {
-
-
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [dob, setDob] = useState("");
   const [gender, setGender] = useState("male");
   const [district, setDistrict] = useState("");
   const [contact, setContact] = useState("");
-  
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(
-      name,
-      age,
-      dob,
-      gender,
-      district,
-      contact
-    );
-    // Add your form submission logic here
+
+    try {
+      const response = await axios.post("http://127.0.0.1:8000/customer", {
+        name,
+        age,
+        dob,
+        gender,
+        district,
+        contact,
+      });
+      alert("User details saved successfully: " + response.data.message);
+      handleReset(); // Reset form after successful submission
+    } catch (error) {
+      console.error("Error saving user details:", error);
+      alert("Failed to save user details: " + (error.response?.data?.message || error.message));
+    }
   };
 
   const handleReset = () => {
-    // Reset all state variables here
     setName("");
     setAge("");
     setDob("");
     setGender("male");
     setDistrict("");
     setContact("");
-   
   };
-
+ 
   return (
     <div className="App">
       <h1>Form in React</h1>
       <fieldset>
-        <form action="#" method="get">
-          <label for="name">Name*</label>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="name">Name*</label>
           <input
             type="text"
             name="name"
@@ -50,27 +54,28 @@ function Savedata() {
             placeholder="Enter Name"
             required
           />
-          <label for="age">Enter Age* </label>
+          <label htmlFor="age">Enter Age* </label>
           <input
-            type="text"
+            type="number"
             name="age"
             id="age"
             value={age}
             onChange={(e) => setAge(e.target.value)}
-            placeholder="Enter age"
+            placeholder="Enter Age"
+            min="0"
+            max="120"
             required
           />
-        <label for="dob">Enter DOB* </label>
+          <label htmlFor="dob">Enter DOB* </label>
           <input
             type="date"
             name="dob"
             id="dob"
             value={dob}
-            onChange={(e) => setDob(e.target.value)}
-            placeholder="Enter DOB"
+            onChange={(e) =>setDob(e.target.value)}
             required
           />
-           <label for="gender">Gender*</label>
+          <label>Gender*</label>
           <input
             type="radio"
             name="gender"
@@ -89,8 +94,7 @@ function Savedata() {
             onChange={(e) => setGender(e.target.value)}
           />
           Female
-
-        <label for="age">Enter District* </label>
+          <label htmlFor="district">Enter District* </label>
           <input
             type="text"
             name="district"
@@ -100,24 +104,21 @@ function Savedata() {
             placeholder="Enter District"
             required
           />
-
-          <label for="tel">Contact*</label>
+          <label htmlFor="contact">Contact*</label>
           <input
             type="tel"
             name="contact"
             id="contact"
             value={contact}
             onChange={(e) => setContact(e.target.value)}
-            placeholder="Enter Mobile number"
+            placeholder="Enter Mobile Number"
+            pattern="[0-9]{10}"
             required
           />
-
-          <button type="reset" value="reset" onClick={() => handleReset()}>
+          <button type="button" onClick={handleReset}>
             Reset
           </button>
-          <button type="submit" value="Submit" onClick={(e) => handleSubmit(e)}>
-            Submit
-          </button>
+          <button type="submit">Submit</button>
         </form>
       </fieldset>
     </div>
