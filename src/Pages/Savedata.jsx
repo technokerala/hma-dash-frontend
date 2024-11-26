@@ -12,20 +12,30 @@ function Savedata() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    
     try {
-      const response = await axios.post("http://127.0.0.1:8000/customer", {
-        name,
-        age,
-        dob,
-        gender,
-        district,
-        contact,
-      });
+      const response = await axios.post("http://localhost:8000/customers", {
+        
+          "name": name,
+          "age": age,
+          "dob": dob,
+          "gender": gender,
+          "district": district,
+          "mob": contact
+      
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+      
       alert("User details saved successfully: " + response.data.message);
       handleReset(); // Reset form after successful submission
     } catch (error) {
       console.error("Error saving user details:", error);
+      
       alert("Failed to save user details: " + (error.response?.data?.message || error.message));
     }
   };
@@ -41,7 +51,7 @@ function Savedata() {
  
   return (
     <div className="App">
-      <h1>Form in React</h1>
+      <h1>User Registration</h1>
       <fieldset>
         <form onSubmit={handleSubmit}>
           <label htmlFor="name">Name*</label>
