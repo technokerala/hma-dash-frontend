@@ -44,6 +44,12 @@
       width: "100%",
       borderRadius: "20px",
     },
+    imageIcon: {
+      width: "5%",
+      //borderRadius: "5px",
+      float: "left", 
+      marginRight: "10px",
+    },
     imageCaption: {
       marginTop: "10px",
       fontStyle: "italic",

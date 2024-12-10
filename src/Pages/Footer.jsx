@@ -2,7 +2,7 @@ import { styles } from "../Styles";
 
 function Footer() {
   return (
-    <div>
+    <div style={styles.container}>
       {/* Footer */}
       <footer style={styles.footer}>
         <p>Data Powered by Information Kerala Mission</p>
