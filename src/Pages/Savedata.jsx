@@ -3,6 +3,25 @@ import "../Savedata.css";
 import axios from "axios";
 
 function Savedata() {
+
+  const calculateAge=(e) => {
+    const today = new Date(); // Current date
+    setDob(e.target.value);
+    const birthDate = new Date(dob);
+    let calculatedAge = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+  
+    // Adjust if birthday hasn't happened yet this year
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      calculatedAge--;
+    }
+    setAge(calculatedAge);
+  }
+
+
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [dob, setDob] = useState("");
@@ -12,31 +31,34 @@ function Savedata() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
-      const response = await axios.post("http://localhost:8000/customers", {
-        
-          "name": name,
-          "age": age,
-          "dob": dob,
-          "gender": gender,
-          "district": district,
-          "mob": contact
-      
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json'
+      const response = await axios.post(
+        "http://localhost:8000/customers",
+        {
+          name: name,
+          age: age,
+          dob: dob,
+          gender: gender,
+          district: district,
+          mob: contact,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      }
-    );
-      
+      );
+
       alert("User details saved successfully: " + response.data.message);
       handleReset(); // Reset form after successful submission
     } catch (error) {
       console.error("Error saving user details:", error);
-      
-      alert("Failed to save user details: " + (error.response?.data?.message || error.message));
+
+      alert(
+        "Failed to save user details: " +
+          (error.response?.data?.message || error.message)
+      );
     }
   };
 
@@ -48,7 +70,7 @@ function Savedata() {
     setDistrict("");
     setContact("");
   };
- 
+
   return (
     <div className="App">
       <h1>User Registration</h1>
@@ -64,26 +86,27 @@ function Savedata() {
             placeholder="Enter Name"
             required
           />
-          <label htmlFor="age">Enter Age* </label>
-          <input
-            type="number"
-            name="age"
-            id="age"
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
-            placeholder="Enter Age"
-            min="0"
-            max="120"
-            required
-          />
           <label htmlFor="dob">Enter DOB* </label>
           <input
             type="date"
             name="dob"
             id="dob"
             value={dob}
-            onChange={(e) =>setDob(e.target.value)}
+            onChange={(e) => calculateAge(e)}
             required
+          />
+          <label htmlFor="age">Enter Age* </label>
+          <input
+            type="number"
+            name="age"
+            id="age"
+            value={age}
+            /* onChange={(e) => setAge(e.target.value)} */
+            placeholder="Enter Age"
+            min="0"
+            max="120"
+            required
+            readOnly
           />
           <label>Gender*</label>
           <input
@@ -134,5 +157,6 @@ function Savedata() {
     </div>
   );
 }
-
 export default Savedata;
+
+
