@@ -16,8 +16,8 @@ function App() {
             <Sidebar />
             <Routes>
               <Route path="/" element={<Statedash />} exact />
-              <Route path="/districtdash" element={<Districtdash />} />
-              {/* <Route path="/districtdash:id" element={<Districtdash />} /> */}
+              {/* <Route path="/districtdash" element={<Districtdash />} /> */}
+              <Route path="/districtdash/:district_id" element={<Districtdash />} />
             </Routes>
           </div>
           <Footer />
